@@ -19,6 +19,7 @@
   "license": "MIT",
   "devDependencies": {
     "jshint": "^2.5.6",
-    "mocha": "^1.21.4"
+    "mocha": "^1.21.4",
+    "nomnom": "^1.8.0"
   }
 }

@@ -4,11 +4,20 @@ var fs = require('fs');
 var http = require('http');
 var urlParse = require('url').parse;
 var IceStream = require('..');
+var opts = require('nomnom')
+  .option('url', {
+    abbr: 'u',
+    default: 'http://mp3.planetradio.de/planetradio/hqlivestream.mp3',
+    help: 'Icecast stream url'
+  })
+  .option('path', {
+    abbr: 'p',
+    default: __dirname + '/stream.mp3',
+    help: 'Output file path'
+  })
+  .parse();
 
-var url = "http://mp3.planetradio.de/planetradio/hqlivestream.mp3";
-var path = __dirname + '/stream.mp3';
-
-var radio = urlParse(url);
+var radio = urlParse(opts.url);
 
 
 var req = http.request({
@@ -20,7 +29,7 @@ var req = http.request({
 
 req.on('response', function(res) {
   var ice = new IceStream({metaint: res.headers['icy-metaint']});
-  var file = fs.createWriteStream(path);
+  var file = fs.createWriteStream(opts.path);
 
   res.pipe(ice).pipe(file);
 
