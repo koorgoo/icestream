@@ -37,12 +37,10 @@ describe('PassStream', function() {
 
       var a = p._chunkers[0];
       assert.equal(a.size, 0);
-      assert.equal(a.chunk.length, 0);
       assert.equal(a.transform, PassStream._noop);
 
       var b = p._chunkers[1];
       assert.equal(b.size, 1);
-      assert.equal(b.chunk.length, 1);
       assert.equal(b.transform, PassStream._noop);
     });
   });
@@ -68,21 +66,21 @@ describe('PassStream', function() {
 
     it('fill empty chunk partly', function() {
       p._chunk(2, p._noop);
-      p._chunkers[0].chunk = new Buffer([0, 99]);
+      p._chunkers[0].chunk = new Buffer([99]);
 
       chunk = p._processChunkers(new Buffer([10]));
       assert.equal(chunk.length, 0);  // []
 
       var slice = Array.prototype.slice;
       var a = p._chunkers[0];
-      assert.deepEqual(slice.call(a.chunk), [10, 99]);
+      assert.deepEqual(slice.call(a.chunk), [99, 10]);
       assert.equal(a.size, 1);
     });
 
     it('fill partial chunk fully', function() {
       p._chunk(2, p._noop);
       p._chunkers[0].size = 1;
-      p._chunkers[0].chunk = new Buffer([10, 0]);
+      p._chunkers[0].chunk = new Buffer([10]);
 
       chunk = p._processChunkers(new Buffer([20, 30, 40]));
       assert.equal(chunk.length, 2);  // [30, 40]
