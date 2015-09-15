@@ -18,6 +18,7 @@
   "dependencies": {},
   "license": "MIT",
   "devDependencies": {
+    "async": "^1.4.2",
     "jshint": "^2.5.6",
     "mocha": "^1.21.4",
     "nomnom": "^1.8.0"

@@ -1,5 +1,4 @@
-icestream
-=========
+# icestream
 
 Icecast stream metadata reader for Node.js
 
